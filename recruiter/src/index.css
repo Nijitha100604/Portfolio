@@ -1,0 +1,96 @@
+@import "tailwindcss";
+
+@theme {
+  --color-page: #f5f7f9;
+  --color-surface: #ffffff;
+  --color-ink: #16222e;
+  --color-muted: #566676;
+  --color-accent: #0e7c86;
+  --color-accent-deep: #0a5d65;
+  --color-tint: #e3f1f2;
+  --color-line: #dce3e9;
+  --font-display: "Newsreader", Georgia, "Times New Roman", serif;
+  --font-sans: "Public Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--color-page);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+@layer components {
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-colors;
+  }
+
+  .btn-primary {
+    @apply bg-accent text-white hover:bg-accent-deep;
+  }
+
+  .btn-quiet {
+    @apply border border-line bg-surface text-ink hover:border-accent hover:text-accent;
+  }
+
+  .chip {
+    @apply inline-flex items-center rounded-full border border-line bg-surface px-3 py-1 text-sm text-ink;
+  }
+
+  .icon-link {
+    @apply grid h-11 w-11 place-items-center rounded-full border border-line bg-surface text-ink transition-colors hover:border-accent hover:text-accent;
+  }
+}
+
+/* Circulating border around the profile photo: an arc that travels around a faint ring. */
+.avatar-ring {
+  background: conic-gradient(from 0deg, transparent 0deg 160deg, var(--color-accent) 360deg), var(--color-line);
+  animation: ring-spin 3.5s linear infinite;
+}
+
+@keyframes ring-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Simple line under the photo that grows outward from the centre on load. */
+.grow-line {
+  transform: scaleX(0);
+  transform-origin: center;
+  animation: line-grow 1.2s cubic-bezier(0.22, 1, 0.36, 1) 0.3s forwards;
+}
+
+@keyframes line-grow {
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .avatar-ring {
+    animation: none;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0s !important;
+    transition-duration: 0.01ms !important;
+  }
+}
