@@ -10,6 +10,7 @@ const EMPTY = {
   projects: [],
   certifications: [],
   activities: [],
+  usingFallback: false,
 };
 
 export function PortfolioProvider({ children }) {
